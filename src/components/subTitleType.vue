@@ -45,6 +45,7 @@ export default {
             color:#c7b268;
             border-radius:15px;
             margin-right:120px;
+            cursor: pointer;
             &:last-child{
                 margin-right:0;
             }

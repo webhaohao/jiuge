@@ -19,7 +19,7 @@ export default {
     return {
     };
   },
-   computed:{
+    computed:{
       navList(){
           return [
               {
@@ -36,7 +36,7 @@ export default {
               {
                   name:this.$t('download'),
                   key:'download',
-                  path:''
+                  path:'resource'
               },
               {
                   name:'九歌旧版1.0',
@@ -45,6 +45,24 @@ export default {
               }
           ]
       }
+   },
+   methods:{
+       navClick(index){
+        const {key} = this.navList[index]
+      
+        if(key === 'language'){
+             console.log(key);
+             console.log(this.$i18n.locale);
+            if(this.$i18n.locale === 'zh_CN'){
+                this.$i18n.locale = 'en_US';
+            }else{
+                this.$i18n.locale = 'zh_CN';
+            }
+        }
+        else{
+            this.navList[index].path && this.$router.push(this.navList[index].path)
+        }
+    }
    }
 }
 </script>
@@ -55,6 +73,7 @@ export default {
     header{
         display:flex;
         justify-content:space-between;
+        padding:18px 0;
     }
     nav{
         overflow: hidden;

@@ -24,6 +24,7 @@
         </div> 
       </div>  
       <subTitleType></subTitleType> 
+      <CategorySelect></CategorySelect>
       <div class="search-box">
             <div class="search-input">
                 <input type="text">
@@ -38,12 +39,16 @@
                         <img src="../../images/camera.png" />
                     </div>
                 </div>
-                <div class="search-btn">
+                <div class="search-btn" @click="onSearch">
                     <span>九歌一下</span> 
                 </div>  
             </div>  
       </div>
-      <modalType :visible="modalVisible" @closeModal="modalTypeClose"></modalType>
+      <modalType :visible="modaTypelVisible" @closeModal="modalTypeClose">
+      </modalType>
+      <Modal :visible="modalVisible" @handleModalClose="modalClose">
+            <poetryDetail></poetryDetail>
+      </Modal>
   </div>
 </template>
 
@@ -51,16 +56,23 @@
 import subTitleType from '@/components/subTitleType.vue';
 import modalType from '@/components/modalType.vue';
 import Header from '@/components/header.vue';
+import Modal from '@/components/modal.vue';
+import CategorySelect from '@/components/categorySelect.vue';
+import poetryDetail from '@/components/poetryDetail.vue';
 export default {
   components:{
       subTitleType,
       modalType,
-      Header
+      Header,
+      Modal,
+      CategorySelect,
+      poetryDetail
   },  
   data () {
       return {
           selectedValue:'',
           selectedBg:require('@/images/index_bg.png'),
+          modaTypelVisible:false,
           modalVisible:false
       }
   },
@@ -69,7 +81,7 @@ export default {
       const {key} = this.$route.query;
       this.selectedValue = key;
       if(key === "poetry"){
-          this.modalVisible = true;
+          this.modaTypelVisible = true;
       }
   },
   computed:{
@@ -136,25 +148,17 @@ export default {
         this.selectedValue = this.items[index].key;
         this.selectedBg = this.items[index].bg;
         if(this.items[index].key === "poetry"){
-            this.modalVisible = true;
-        }
-    },
-    navClick(index){
-        const {key} = this.navList[index]
-      
-        if(key === 'language'){
-             console.log(key);
-             console.log(this.$i18n.locale);
-            if(this.$i18n.locale === 'zh_CN'){
-                this.$i18n.locale = 'en_US';
-            }else{
-                this.$i18n.locale = 'zh_CN';
-            }
+            this.modaTypelVisible = true;
         }
     },
     modalTypeClose(visible){
-        console.log(visible);
+        this.modaTypelVisible = visible;
+    },
+    modalClose(visible){
         this.modalVisible = visible;
+    },
+    onSearch(){
+        this.modalVisible = true;
     }
   }
  
@@ -271,7 +275,7 @@ export default {
         border:5px solid #fff;
         border-radius:10px;
         height:80px;
-        margin-top:24px;
+        margin:24px 40px 0 40px;
         display:flex;
         .search-input{
             width:80%;

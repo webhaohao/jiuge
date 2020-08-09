@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n';
 import App from './App'
+import vueSwiper from 'vue-awesome-swiper'
 import router from './router'
 import './utils/flexible'
+import 'swiper/swiper-bundle.css'
 Vue.config.productionTip = false
 Vue.use(VueI18n);
+Vue.use(vueSwiper);
 const i18n = new VueI18n({
   locale: 'zh_CN', // 将要切换的语言，可以通过url拼的参数获取，用户行为select选择获取，本地manifest配置获取等，根据场景动态获取
   messages: {

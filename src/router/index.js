@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import index from '@/pages/index'
 import home from '@/pages/home'
 import version from '@/pages/version'
+import resource from '@/pages/resource'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +22,11 @@ export default new Router({
       path:'/version',
       name:'version',
       component:version
+    },
+    {
+      path:'/resource',
+      name:'resource',
+      component:resource
     }
   ]
 })

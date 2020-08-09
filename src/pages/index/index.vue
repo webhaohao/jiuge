@@ -1,18 +1,29 @@
 <template>
   <div class="jiuge-index">
-      <div class="jiuge-index-center">
-          <div class="logo">
-              <img src="../../images/logo.png" alt="">
-          </div>
-          <div class="version-intr" @click="$router.push('/version')">版本介绍</div>    
-      </div>
-      <div class="jiuge-items">
-           <div class="item" v-for="(item,index) in items" :key="item.name" @click="itemClick(index)">
-                <span>{{item.name}}</span>
-                <img :src="item.imgUrl"/>
-                <i></i>
-            </div> 
-      </div>    
+   <svg width="0" height="0"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <filter id="water">
+        <feTurbulence type="fractalNoise" baseFrequency=".05 .05" numOctaves="1" result="noise1"></feTurbulence>
+        <feColorMatrix in="noise1" type="hueRotate" values="0" result="noise2">
+        <animate attributeName="values" from="0" to="360" dur="2s" repeatCount="indefinite"></animate>
+        </feColorMatrix>
+        <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="7" in="SourceGraphic" in2="noise2" />
+    </filter>
+    </svg>
+    <div class="jiuge-index-center">
+        <div class="logo">
+            <img src="../../images/logo.png" alt="">
+        </div>
+        <div class="version-intr" @click="$router.push('/version')">版本介绍</div>    
+    </div>
+    <div class="jiuge-items">
+        <div class="item" v-for="(item,index) in items" :key="item.name" @click="itemClick(index)">
+            <span>{{item.name}}</span>
+            <img :src="item.imgUrl"/>
+            <i></i>
+        </div> 
+    </div>    
   </div>
 </template>
 
@@ -69,6 +80,11 @@ export default {
     justify-content:center;
     align-items:center;
     flex-direction:column;
+}
+.logo img{
+    filter: url(#water);
+    object-fit: cover;
+    width:230px;
 }
 .version-intr{
     font-size:30px;

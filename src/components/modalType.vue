@@ -49,7 +49,8 @@ export default {
         position:fixed;
         top:0;
         left:0;
-        background:rgba(0,0,0,.6);
+        background:rgba(255,255,255,.6);
+        z-index:999;
         display:flex;
         justify-content:center;
         align-items:center;
