@@ -82,6 +82,7 @@ export default {
            align-items:center;
            color:#C7B268;
            font-size:16px;
+           cursor: pointer;
         }
     }
     .swiper-button{

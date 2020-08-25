@@ -1,7 +1,7 @@
 <template>
-    <div class="type-list">
+    <div class="type-list" :show="isShow">
         <ul>
-            <li v-for="item in subTypelist" :key="item.name">{{item.name}}</li>
+            <li v-for="(item,index) in list" :key="index">{{item.label}}</li>
         </ul>
     </div>
 </template>
@@ -9,20 +9,30 @@
 export default {
   name: "subTitleType",
   props:{
-      subTypelist:{
+      list:{
           type:Array,
           default:()=>{
               return [
                   {
-                    name:'五言律诗'
+                    key:'1',
+                    label:'五言律诗'
                   },
                   {
-                    name:'七言律诗'  
+                    key:'2',  
+                    label:'七言律诗'  
                   }
               ]
           }
       }
   },
+  watch:{
+      list:{
+          immediate:true,
+          handler(value){
+              this.isShow = value.length > 0;
+          }
+      }
+  },  
   data () {
     return {
     };

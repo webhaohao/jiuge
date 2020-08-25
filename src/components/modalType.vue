@@ -1,6 +1,6 @@
 <template>
     <div class="modal-type" v-show="visible">
-        <div class="item" v-for="item in list" :key="item.name" @click="itemClick()">
+        <div class="item" v-for="item in list" :key="item.name" @click="itemClick(item)">
             {{item.name}}
         </div>
     </div>
@@ -18,26 +18,73 @@ export default {
     return {
         list:[
             {
-                name:'绝句'
+                name:'绝句',
+                children:[
+                    {
+                       key:'',
+                       label:'五言绝句' 
+                    },
+                    {
+                        key:'',
+                        label:'七言绝句'
+                    }
+                ]
             },
             {
-                name:'风格绝句' 
+                name:'风格绝句',
+                children:[
+                    {
+                       key:'',
+                       label:'五言绝句' 
+                    },
+                    {
+                        key:'',
+                        label:'七言绝句'
+                    }
+                ] 
             },
             {
-                name:'藏头诗'
+                name:'藏头诗',
+                children:[
+                    {
+                        key:'',
+                        label:'五言藏头'
+                    },
+                    {
+                        key:'',
+                        label:'七言藏头'
+                    }
+                ]
             },
             {
-                name:'律诗' 
+                name:'律诗',
+                children:[
+                    {
+                        key:'',
+                        label:'五言律诗'
+                    },
+                    {
+                        key:'',
+                        label:'七言律诗'
+                    }
+                ] 
             },
             {
-                name:'集句诗'
+                name:'集句诗',
+                children:[
+                    {
+                        key:'',
+                        label:'集句诗'
+                    }
+                ]
             }
         ]
     };
   },
   methods:{
-      itemClick(){
-          this.$emit('closeModal',false);
+      itemClick(item){
+          this.$emit('currentModalItem',item);
+          // this.$emit('closeModal',false);
       }
   }
 }

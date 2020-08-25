@@ -17,13 +17,13 @@
       <div class="type-t">
         <div class="type-title">
             <div class="type-title-content">
-                藏头诗
+                {{currentTitle}}
             </div>
             <img src="../../images/type-title-bg.png" alt="" class="title-decorate-left">
             <img src="../../images/type-title-bg.png" alt="" class="title-decorate-right">
         </div> 
       </div>  
-      <subTitleType></subTitleType> 
+      <subTitleType :list="subTitleList"></subTitleType> 
       <CategorySelect></CategorySelect>
       <div class="search-box">
             <div class="search-input">
@@ -44,7 +44,7 @@
                 </div>  
             </div>  
       </div>
-      <modalType :visible="modaTypelVisible" @closeModal="modalTypeClose">
+      <modalType :visible="modaTypelVisible" @closeModal="modalTypeClose" @currentModalItem="currentModalItem">
       </modalType>
       <Modal :visible="modalVisible" @handleModalClose="modalClose">
             <poetryDetail></poetryDetail>
@@ -59,6 +59,7 @@ import Header from '@/components/header.vue';
 import Modal from '@/components/modal.vue';
 import CategorySelect from '@/components/categorySelect.vue';
 import poetryDetail from '@/components/poetryDetail.vue';
+import { getKeyword } from '@/api'
 export default {
   components:{
       subTitleType,
@@ -73,7 +74,9 @@ export default {
           selectedValue:'',
           selectedBg:require('@/images/index_bg.png'),
           modaTypelVisible:false,
-          modalVisible:false
+          modalVisible:false,
+          currentTitle:"藏头诗",
+          subTitleList:[]
       }
   },
   mounted(){
@@ -144,11 +147,22 @@ export default {
     }
   },    
   methods:{
+    currentModalItem(item){
+         const {name,children} = item;
+         this.currentTitle = name;
+         this.subTitleList = children;
+         this.modaTypelVisible = false;   
+    },  
     itemClick(index){
         this.selectedValue = this.items[index].key;
         this.selectedBg = this.items[index].bg;
-        if(this.items[index].key === "poetry"){
+        const key = this.items[index].key
+        if( key === "poetry"){
             this.modaTypelVisible = true;
+        }
+        else{
+            this.currentTitle = this.items[index].name;
+            this.subTitleList = [];
         }
     },
     modalTypeClose(visible){
@@ -159,6 +173,7 @@ export default {
     },
     onSearch(){
         this.modalVisible = true;
+        getKeyword();
     }
   }
  
@@ -326,6 +341,7 @@ export default {
                 }
             }
             .camera{
+                cursor: pointer;
                 &>img{
                     width:38px;
                 }
