@@ -21,11 +21,11 @@ export default {
                 name:'绝句',
                 children:[
                     {
-                       key:'',
+                       key:1,
                        label:'五言绝句' 
                     },
                     {
-                        key:'',
+                        key:2,
                         label:'七言绝句'
                     }
                 ]
@@ -34,11 +34,11 @@ export default {
                 name:'风格绝句',
                 children:[
                     {
-                       key:'',
+                       key:1,
                        label:'五言绝句' 
                     },
                     {
-                        key:'',
+                        key:2,
                         label:'七言绝句'
                     }
                 ] 
@@ -47,11 +47,11 @@ export default {
                 name:'藏头诗',
                 children:[
                     {
-                        key:'',
+                        key:1,
                         label:'五言藏头'
                     },
                     {
-                        key:'',
+                        key:2,
                         label:'七言藏头'
                     }
                 ]
@@ -60,11 +60,11 @@ export default {
                 name:'律诗',
                 children:[
                     {
-                        key:'',
+                        key:1,
                         label:'五言律诗'
                     },
                     {
-                        key:'',
+                        key:2,
                         label:'七言律诗'
                     }
                 ] 
@@ -73,7 +73,7 @@ export default {
                 name:'集句诗',
                 children:[
                     {
-                        key:'',
+                        key:1,
                         label:'集句诗'
                     }
                 ]

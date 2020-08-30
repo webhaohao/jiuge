@@ -16,9 +16,21 @@
                     <div class="lv">A</div>
                     <div class="text">诗态修改</div>
                 </div>
+                <div class="item">
+                    <div class="lv">A</div>
+                    <div class="text">诗态修改</div>
+                </div>
+                <div class="item">
+                    <div class="lv">A</div>
+                    <div class="text">诗态修改</div>
+                </div>
+                <div class="item">
+                    <div class="lv">A</div>
+                    <div class="text">诗态修改</div>
+                </div>
             </div>
             <div class="options">
-                <div class="item" v-for="(item,index) in options" :key="index">{{item.label}}</div>
+                <div class="item" v-for="(item,index) in options" :key="index" @click="itemOptionsClick(item.key)">{{item.label}}</div>
             </div>
         </div>
     </div>
@@ -30,7 +42,8 @@ export default {
     return {
         options:[
             {
-                label:'修改推荐'
+                label:'修改推荐',
+                key:'edit'
             },
             {
                 label:'古人相似诗作'
@@ -43,6 +56,11 @@ export default {
             }
         ]
     };
+  },
+  methods:{
+    itemOptionsClick(key){
+        this.$emit('itemOptionsClick',key)     
+    }
   }
 }
 </script>
@@ -86,6 +104,8 @@ export default {
         padding:24px 0;
         .level{
             padding:0 68px;
+            display:flex;
+            cursor: pointer;
             .item{
                 width:97px;
                 margin-right:40px;
@@ -126,6 +146,7 @@ export default {
                border-radius:5px;
                margin-right:36px;
                margin-bottom:26px;
+               font-size:24px;
                cursor: pointer;
                &:nth-child(even){
                    margin-right:0;

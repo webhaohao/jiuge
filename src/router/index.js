@@ -4,6 +4,7 @@ import index from '@/pages/index'
 import home from '@/pages/home'
 import version from '@/pages/version'
 import resource from '@/pages/resource'
+import poetryDetail from '@/components/poetryDetail';
 Vue.use(Router)
 
 export default new Router({

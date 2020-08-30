@@ -1,7 +1,11 @@
 <template>
     <div class="type-list" :show="isShow">
         <ul>
-            <li v-for="(item,index) in list" :key="index">{{item.label}}</li>
+            <li  v-for="(item,index) in list" 
+                :class="selectedSubTitleKey === item.key ? 'active':''" 
+                :key="index"
+                @click="itemClick(item.key)"
+            >{{item.label}}</li>
         </ul>
     </div>
 </template>
@@ -23,6 +27,10 @@ export default {
                   }
               ]
           }
+      },
+      selectedSubTitleKey:{
+          type:Number,
+          default:1
       }
   },
   watch:{
@@ -32,7 +40,12 @@ export default {
               this.isShow = value.length > 0;
           }
       }
-  },  
+  }, 
+  methods:{
+      itemClick(key){
+          this.$emit('subTitleItemClick',key)
+      }
+  }, 
   data () {
     return {
     };
@@ -59,6 +72,10 @@ export default {
             &:last-child{
                 margin-right:0;
             }
+            &.active{
+                background:#c37451;
+                color:#fff;
+            } 
         }
     }
 }

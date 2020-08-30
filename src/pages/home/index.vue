@@ -23,7 +23,7 @@
             <img src="../../images/type-title-bg.png" alt="" class="title-decorate-right">
         </div> 
       </div>  
-      <subTitleType :list="subTitleList"></subTitleType> 
+      <subTitleType :list="subTitleList" :selectedSubTitleKey="selectedSubTitleKey" @subTitleItemClick="subTitleItemClick"></subTitleType> 
       <CategorySelect></CategorySelect>
       <div class="search-box">
             <div class="search-input">
@@ -36,7 +36,8 @@
                     </div>
                     <div class="line"></div>
                     <div class="camera">
-                        <img src="../../images/camera.png" />
+                        <img src="../../images/camera.png" @click="handleCameraClick"/>
+                        <input ref="inputer" id="upload_file" type="file" style="display:none" @change="handleFileChange">
                     </div>
                 </div>
                 <div class="search-btn" @click="onSearch">
@@ -46,8 +47,15 @@
       </div>
       <modalType :visible="modaTypelVisible" @closeModal="modalTypeClose" @currentModalItem="currentModalItem">
       </modalType>
-      <Modal :visible="modalVisible" @handleModalClose="modalClose">
-            <poetryDetail></poetryDetail>
+      <Modal :visible="modalVisible" @handleModalClose="modalClose">   
+            <template v-if="selectedValue === 'poetry'">
+                <template v-if="status === 'poetryDetail'">
+                    <poetryDetail @itemOptionsClick="itemOptionsClick"></poetryDetail>
+                </template>
+                 <template v-else-if="status === 'poetryEdit'">
+                    <poetryDetailEdit></poetryDetailEdit>
+                </template>
+            </template>     
       </Modal>
   </div>
 </template>
@@ -59,6 +67,7 @@ import Header from '@/components/header.vue';
 import Modal from '@/components/modal.vue';
 import CategorySelect from '@/components/categorySelect.vue';
 import poetryDetail from '@/components/poetryDetail.vue';
+import poetryDetailEdit from '@/components/poetryDetailEdit.vue';
 import { getKeyword } from '@/api'
 export default {
   components:{
@@ -67,7 +76,8 @@ export default {
       Header,
       Modal,
       CategorySelect,
-      poetryDetail
+      poetryDetail,
+      poetryDetailEdit
   },  
   data () {
       return {
@@ -76,7 +86,9 @@ export default {
           modaTypelVisible:false,
           modalVisible:false,
           currentTitle:"藏头诗",
-          subTitleList:[]
+          subTitleList:[],
+          selectedSubTitleKey:1,
+          status:'poetryDetail'
       }
   },
   mounted(){
@@ -151,8 +163,18 @@ export default {
          const {name,children} = item;
          this.currentTitle = name;
          this.subTitleList = children;
-         this.modaTypelVisible = false;   
+         this.modaTypelVisible = false; 
+         this.selectedSubTitleKey = 1;  
     },  
+    handleFileChange(){
+         let inputDOM = this.$refs.inputer;
+        // 通过DOM取文件数据
+        const file = inputDOM.files;
+    },
+    handleCameraClick(){
+        document.getElementById('upload_file').click()
+        this.handleFileChange()
+    },
     itemClick(index){
         this.selectedValue = this.items[index].key;
         this.selectedBg = this.items[index].bg;
@@ -174,6 +196,14 @@ export default {
     onSearch(){
         this.modalVisible = true;
         getKeyword();
+    },
+    subTitleItemClick(key){
+        this.selectedSubTitleKey = key;
+    },
+    itemOptionsClick(key){
+        if(key === 'edit'){
+            this.status = 'poetryEdit'
+        }
     }
   }
  
