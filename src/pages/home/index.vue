@@ -27,11 +27,11 @@
       <CategorySelect></CategorySelect>
       <div class="search-box">
             <div class="search-input">
-                <input type="text">
+                <input type="text" v-model="searchValue">
             </div>
             <div class="search-right">
                 <div class="search-options">
-                    <div class="close-btn">
+                    <div class="close-btn" @click="clearSearch">
                         <img src="../../images/close.png" alt="">
                     </div>
                     <div class="line"></div>
@@ -47,7 +47,7 @@
       </div>
       <modalType :visible="modaTypelVisible" @closeModal="modalTypeClose" @currentModalItem="currentModalItem">
       </modalType>
-      <Modal :visible="modalVisible" @handleModalClose="modalClose">   
+      <Modal :visible="modalVisible" @handleModalClose="modalClose" :isShowBar="isShowBar">   
             <template v-if="selectedValue === 'poetry'">
                 <template v-if="status === 'poetryDetail'">
                     <poetryDetail @itemOptionsClick="itemOptionsClick"></poetryDetail>
@@ -55,7 +55,16 @@
                  <template v-else-if="status === 'poetryEdit'">
                     <poetryDetailEdit></poetryDetailEdit>
                 </template>
-            </template>     
+            </template>
+            <template v-else-if="selectedValue === 'search'">
+                <searchDetail></searchDetail>
+            </template>  
+             <template v-else-if="selectedValue === 'couplet'">
+                <coupletDetail></coupletDetail>
+            </template> 
+             <template v-else-if="selectedValue === 'word'">
+                <wordDetail></wordDetail>
+            </template>          
       </Modal>
   </div>
 </template>
@@ -68,6 +77,9 @@ import Modal from '@/components/modal.vue';
 import CategorySelect from '@/components/categorySelect.vue';
 import poetryDetail from '@/components/poetryDetail.vue';
 import poetryDetailEdit from '@/components/poetryDetailEdit.vue';
+import searchDetail from '@/components/searchDetail.vue';
+import coupletDetail from '@/components/coupletDetail.vue'
+import wordDetail from '@/components/wordDetail.vue';
 import { getKeyword } from '@/api'
 export default {
   components:{
@@ -77,7 +89,10 @@ export default {
       Modal,
       CategorySelect,
       poetryDetail,
-      poetryDetailEdit
+      poetryDetailEdit,
+      searchDetail,
+      coupletDetail,
+      wordDetail
   },  
   data () {
       return {
@@ -88,7 +103,9 @@ export default {
           currentTitle:"藏头诗",
           subTitleList:[],
           selectedSubTitleKey:1,
-          status:'poetryDetail'
+          status:'poetryDetail',
+          searchValue:"",
+          isShowBar:false
       }
   },
   mounted(){
@@ -194,6 +211,12 @@ export default {
         this.modalVisible = visible;
     },
     onSearch(){
+        if(this.selectedValue === 'word'){
+            this.isShowBar = true;
+        }
+        else{
+            this.isShowBar = false
+        }
         this.modalVisible = true;
         getKeyword();
     },
@@ -204,6 +227,9 @@ export default {
         if(key === 'edit'){
             this.status = 'poetryEdit'
         }
+    },
+    clearSearch(){
+        this.searchValue = "";
     }
   }
  
@@ -366,6 +392,7 @@ export default {
                 margin:0 23px;
             }
             .close-btn{
+                cursor: pointer;
                 &>img{
                     width:41px;
                 }
